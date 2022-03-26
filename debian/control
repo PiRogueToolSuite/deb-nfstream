@@ -17,8 +17,8 @@ Build-Depends:
  libtool,
  pkg-config,
 # requirements.txt:
- python3-cffi (>= 1.14.6),
- python3-dpkt (>= 1.9.7),
+ python3-cffi (>= 1.14.5),
+ python3-dpkt (>= 1.9.2),
  python3-pandas (>= 1.1.5),
  python3-psutil (>= 5.8.0),
 Standards-Version: 4.5.1
