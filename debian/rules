@@ -13,34 +13,34 @@ override_dh_clean:
 override_dh_auto_build:
 	# Build each vendorized library serially, letting each sub-make
 	# work with parallelism enabled.
-	$(MAKE) -f debian/rules libgcrypt
-	$(MAKE) -f debian/rules libgpg-error
-	$(MAKE) -f debian/rules libpcap
-	$(MAKE) -f debian/rules ndpi
+	$(MAKE) -f debian/rules vendor/staging/usr/lib/libgcrypt.a
+	$(MAKE) -f debian/rules vendor/staging/usr/lib/libgpg-error.a
+	$(MAKE) -f debian/rules vendor/staging/usr/lib/libpcap.a
+	$(MAKE) -f debian/rules vendor/staging/usr/lib/libndpi.a
 	dh_auto_build
 
-libgcrypt:
-	cd vendor/$@ \
+vendor/staging/usr/lib/libgcrypt.a:
+	cd vendor/libgcrypt \
 	&& ./autogen.sh \
 	&& ./configure --prefix=/usr --enable-static --disable-shared --with-pic --disable-doc --disable-nls \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
 
-libgpg-error:
-	cd vendor/$@ \
+vendor/staging/usr/lib/libgpg-error.a:
+	cd vendor/libgpg-error \
 	&& ./autogen.sh \
 	&& ./configure --prefix=/usr --enable-static --disable-shared --with-pic --disable-doc \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
 
-libpcap:
-	cd vendor/$@ \
+vendor/staging/usr/lib/libpcap.a:
+	cd vendor/libpcap \
 	&& ./configure --prefix=/usr --enable-ipv6 --disable-universal --enable-dbus=no --without-libnl \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
 
-ndpi:
-	cd vendor/$@ \
+vendor/staging/usr/lib/libndpi.a:
+	cd vendor/ndpi \
 	&& ./autogen.sh --prefix=/usr --with-only-libndpi \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
