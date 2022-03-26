@@ -1,0 +1,8 @@
+nfstream for Debian
+------------------
+
+To work properly, this makes requires some specific combination of other
+packages. To gather everything in one place, git submodules have been
+declared in the packaging branch, pulling the required git repositories.
+
+ -- Cyril Brulebois <cyril@debamax.com>  Sat, 26 Mar 2022 16:21:32 +0100

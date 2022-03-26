@@ -1,0 +1,22 @@
+Source: nfstream
+Section: net
+Priority: optional
+Maintainer: Cyril Brulebois <cyril@debamax.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.5.1
+Homepage: https://www.nfstream.org/
+Vcs-Browser: https://github.com/PiRogueToolSuite/deb-nfstream
+Vcs-Git: https://github.com/PiRogueToolSuite/deb-nfstream.git
+Rules-Requires-Root: no
+
+Package: nfstream
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: flexible network data analysis framework
+ NFStream is a multiplatform Python framework providing fast, flexible,
+ and expressive data structures designed to make working with online or
+ offline network data both easy and intuitive. It aims to be the
+ fundamental high-level building block for doing practical, real world
+ network data analysis in Python. Additionally, it has the broader goal
+ of becoming a common network data analytics framework for researchers
+ providing data reproducibility across experiments.
