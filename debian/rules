@@ -41,7 +41,6 @@ libpcap:
 
 ndpi:
 	cd vendor/$@ \
-	&& ./autogen.sh \
-	&& ./configure \
+	&& ./autogen.sh --with-only-libndpi \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
