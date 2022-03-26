@@ -1,6 +1,47 @@
 #!/usr/bin/make -f
 
 export PYBUILD_NAME := nfstream
+export VENDORIZED_LIBRARIES := libgcrypt libgpg-error libpcap ndpi
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_clean:
+	rm -rf vendor/staging
+	dh_clean
+
+override_dh_auto_build:
+	# Build each vendorized library serially, letting each sub-make
+	# work with parallelism enabled.
+	$(MAKE) -f debian/rules libgcrypt
+	$(MAKE) -f debian/rules libgpg-error
+	$(MAKE) -f debian/rules libpcap
+	$(MAKE) -f debian/rules ndpi
+	dh_auto_build
+
+libgcrypt:
+	cd vendor/$@ \
+	&& ./autogen.sh \
+	&& ./configure --enable-maintainer-mode --enable-static --enable-shared --with-pic --disable-doc --disable-nls \
+	&& $(MAKE) \
+	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
+
+libgpg-error:
+	cd vendor/$@ \
+	&& ./autogen.sh \
+	&& ./configure --enable-maintainer-mode --enable-static --enable-shared --with-pic --disable-doc \
+	&& $(MAKE) \
+	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
+
+libpcap:
+	cd vendor/$@ \
+	&& ./configure --enable-ipv6 --disable-universal --enable-dbus=no --without-libnl \
+	&& $(MAKE) \
+	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
+
+ndpi:
+	cd vendor/$@ \
+	&& ./autogen.sh \
+	&& ./configure \
+	&& $(MAKE) \
+	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
