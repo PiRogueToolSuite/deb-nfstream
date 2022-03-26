@@ -22,25 +22,25 @@ override_dh_auto_build:
 libgcrypt:
 	cd vendor/$@ \
 	&& ./autogen.sh \
-	&& ./configure --enable-static --disable-shared --with-pic --disable-doc --disable-nls \
+	&& ./configure --prefix=/usr --enable-static --disable-shared --with-pic --disable-doc --disable-nls \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
 
 libgpg-error:
 	cd vendor/$@ \
 	&& ./autogen.sh \
-	&& ./configure --enable-static --disable-shared --with-pic --disable-doc \
+	&& ./configure --prefix=/usr --enable-static --disable-shared --with-pic --disable-doc \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
 
 libpcap:
 	cd vendor/$@ \
-	&& ./configure --enable-ipv6 --disable-universal --enable-dbus=no --without-libnl \
+	&& ./configure --prefix=/usr --enable-ipv6 --disable-universal --enable-dbus=no --without-libnl \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
 
 ndpi:
 	cd vendor/$@ \
-	&& ./autogen.sh --with-only-libndpi \
+	&& ./autogen.sh --prefix=/usr --with-only-libndpi \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
