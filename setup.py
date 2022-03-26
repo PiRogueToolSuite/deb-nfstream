@@ -41,10 +41,10 @@ def setup_engine_cc():
                            'nfstream/engine/engine_cc.so',
                            '-g', '-fPIC', '-DPIC', '-O2', '-Wall', 'nfstream/engine/engine_cc.c',
                            # Required compiled static libs
-                           '/usr/local/lib/libpcap.a',
-                           '/usr/local/lib/libndpi.a',
-                           '/usr/local/lib/libgcrypt.a',
-                           '/usr/local/lib/libgpg-error.a'
+                           'vendor/staging/usr/lib/libpcap.a',
+                           'vendor/staging/usr/lib/libndpi.a',
+                           'vendor/staging/usr/lib/libgcrypt.a',
+                           'vendor/staging/usr/lib/libgpg-error.a'
                            ])
 
 
