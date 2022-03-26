@@ -22,14 +22,14 @@ override_dh_auto_build:
 libgcrypt:
 	cd vendor/$@ \
 	&& ./autogen.sh \
-	&& ./configure --enable-static --enable-shared --with-pic --disable-doc --disable-nls \
+	&& ./configure --enable-static --disable-shared --with-pic --disable-doc --disable-nls \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
 
 libgpg-error:
 	cd vendor/$@ \
 	&& ./autogen.sh \
-	&& ./configure --enable-static --enable-shared --with-pic --disable-doc \
+	&& ./configure --enable-static --disable-shared --with-pic --disable-doc \
 	&& $(MAKE) \
 	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
 
