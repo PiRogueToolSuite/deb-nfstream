@@ -1,0 +1,12 @@
+[submodule "vendor/libgcrypt"]
+	path = vendor/libgcrypt
+	url = https://github.com/gpg/libgcrypt
+[submodule "vendor/libpcap"]
+	path = vendor/libpcap
+	url = https://github.com/tsnoam/libpcap
+[submodule "vendor/ndpi"]
+	path = vendor/ndpi
+	url = https://github.com/ntop/nDPI.git
+[submodule "vendor/libgpg-error"]
+	path = vendor/libgpg-error
+	url = https://github.com/gpg/libgpg-error
