@@ -19,6 +19,11 @@ override_dh_auto_build:
 	$(MAKE) -f debian/rules vendor/staging/usr/lib/libndpi.a
 	dh_auto_build
 
+# We want engine_cc.so to retain its name, which is used to load it dynamically
+# by the Python code:
+override_dh_python3:
+	dh_python3 --no-ext-rename
+
 vendor/staging/usr/lib/libgcrypt.a:
 	cd vendor/libgcrypt \
 	&& ./autogen.sh \
