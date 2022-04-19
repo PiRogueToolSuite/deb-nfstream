@@ -1,5 +1,5 @@
-nfstream (6.3.5~ds1) unstable; urgency=medium
+nfstream (6.3.5~ds1) bullseye; urgency=medium
 
   * Initial release.
 
- -- Cyril Brulebois <cyril@debamax.com>  Sat, 26 Mar 2022 16:21:32 +0100
+ -- Cyril Brulebois <cyril@debamax.com>  Tue, 19 Apr 2022 13:17:19 +0200
