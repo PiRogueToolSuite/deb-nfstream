@@ -1,3 +1,10 @@
+nfstream (6.3.5~ds2) bullseye; urgency=medium
+
+  * Fix missing dependency on python3-cffi by harcoding the same python3-*
+    packages (and their versions) in Build-Depends and in Depends.
+
+ -- Cyril Brulebois <cyril@debamax.com>  Tue, 26 Apr 2022 00:24:51 +0200
+
 nfstream (6.3.5~ds1) bullseye; urgency=medium
 
   * Initial release.
