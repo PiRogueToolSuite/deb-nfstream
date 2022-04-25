@@ -35,6 +35,11 @@ Depends:
  ${misc:Depends},
  ${shlibs:Depends},
  ${python3:Depends},
+# requirements.txt:
+ python3-cffi (>= 1.14.5),
+ python3-dpkt (>= 1.9.2),
+ python3-pandas (>= 1.1.5),
+ python3-psutil (>= 5.8.0),
 Recommends:
  ${python3:Depends},
 Description: flexible network data analysis framework
