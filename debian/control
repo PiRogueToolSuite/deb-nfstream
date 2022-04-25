@@ -40,8 +40,6 @@ Depends:
  python3-dpkt (>= 1.9.2),
  python3-pandas (>= 1.1.5),
  python3-psutil (>= 5.8.0),
-Recommends:
- ${python3:Depends},
 Description: flexible network data analysis framework
  NFStream is a multiplatform Python framework providing fast, flexible,
  and expressive data structures designed to make working with online or
