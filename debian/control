@@ -32,9 +32,9 @@ Rules-Requires-Root: no
 Package: python3-nfstream
 Architecture: any
 Depends:
+ ${misc:Depends},
  ${shlibs:Depends},
  ${python3:Depends},
- ${misc:Depends},
 Recommends:
  ${python3:Depends},
 Description: flexible network data analysis framework
