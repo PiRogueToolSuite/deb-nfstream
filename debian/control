@@ -14,6 +14,7 @@ Build-Depends:
  bison,
  flex,
  gettext,
+ git,
  libgpg-error-dev,
  libjson-c-dev,
  libtool,

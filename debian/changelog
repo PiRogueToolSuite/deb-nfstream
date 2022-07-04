@@ -1,3 +1,9 @@
+nfstream (6.3.5~ds3) UNRELEASED; urgency=medium
+
+  * Add git build-dep.
+
+ -- Cyril Brulebois <cyril@debamax.com>  Mon, 04 Jul 2022 19:00:08 +0200
+
 nfstream (6.3.5~ds2) bullseye; urgency=medium
 
   * Fix missing dependency on python3-cffi by harcoding the same python3-*
