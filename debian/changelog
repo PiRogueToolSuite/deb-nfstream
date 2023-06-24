@@ -6,6 +6,7 @@ nfstream (6.3.5~ds3) UNRELEASED; urgency=medium
   * Add libgcrypt-update-gpg-error-detection.patch to fix libgpg-error
     detection due to gpg-error-config's removal in Bookworm. Upstream m4
     macro from latest master branch, adding support for gpgrt-config.
+  * Force parallelism with -j$(nproc) for all 4 subdirectory builds.
 
  -- Cyril Brulebois <cyril@debamax.com>  Mon, 04 Jul 2022 19:00:08 +0200
 
