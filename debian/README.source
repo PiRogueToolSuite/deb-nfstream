@@ -1,7 +1,7 @@
 nfstream for Debian
 ------------------
 
-To work properly, this makes requires some specific combination of other
+To work properly, this package requires some specific combination of other
 packages. To gather everything in one place, git submodules have been
 declared in the packaging branch, pulling the required git repositories.
 
