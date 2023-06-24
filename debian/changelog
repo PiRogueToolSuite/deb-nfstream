@@ -7,6 +7,9 @@ nfstream (6.3.5~ds3) UNRELEASED; urgency=medium
     detection due to gpg-error-config's removal in Bookworm. Upstream m4
     macro from latest master branch, adding support for gpgrt-config.
   * Force parallelism with -j$(nproc) for all 4 subdirectory builds.
+  * Set tar-ignore to an empty string via debian/source/options, since
+    the source package needs to retain git metadata for the build to
+    succeed.
 
  -- Cyril Brulebois <cyril@debamax.com>  Mon, 04 Jul 2022 19:00:08 +0200
 
