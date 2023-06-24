@@ -2,6 +2,7 @@ nfstream (6.3.5~ds3) UNRELEASED; urgency=medium
 
   * Add git build-dep.
   * Fix typo in debian/README.source
+  * Enable quilt (build-dep and dh sequence).
 
  -- Cyril Brulebois <cyril@debamax.com>  Mon, 04 Jul 2022 19:00:08 +0200
 

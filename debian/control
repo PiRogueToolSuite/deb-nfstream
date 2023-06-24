@@ -8,6 +8,7 @@ Build-Depends:
  python3-all,
  python3-setuptools,
  python3-wheel,
+ quilt,
 # gathered from vendorized libraries:
  autoconf,
  automake,
