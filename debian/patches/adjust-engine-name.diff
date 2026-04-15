@@ -1,0 +1,39 @@
+From: Cyril Brulebois <cyril@debamax.com>
+Date: Wed, 15 Apr 2026 18:31:16 +0200
+Subject: Avoid shipping the shared object at the top level.
+
+By default we would get the following layout:
+
+    ./usr/lib/python3/dist-packages/_lib_engine.abi3.so
+    ./usr/lib/python3/dist-packages/nfstream/*.py
+    ./usr/lib/python3/dist-packages/nfstream/*/*.py
+
+That works (at least `import nfstream` succeeds) but that doens't look very
+reasonable. Moving the shared object manually isn't sufficient, as it wouldn't
+be possible to load it anymore.
+
+Therefore, change its name at the `ffi_builder.set_source()` level, adjusting
+the import from within engine.py.
+
+--- a/nfstream/engine/engine_build.py
++++ b/nfstream/engine/engine_build.py
+@@ -260,7 +260,7 @@ ffi_builder = FFI()
+ 
+ 
+ ffi_builder.set_source(
+-    "_lib_engine",
++    "nfstream._lib_engine",
+     ENGINE_SOURCE,
+     include_dirs=[convert_path(d) for d in INCLUDE_DIRS],
+     extra_link_args=[convert_path(a) for a in EXTRALINK_ARGS],
+--- a/nfstream/engine/engine.py
++++ b/nfstream/engine/engine.py
+@@ -13,7 +13,7 @@ If not, see <http://www.gnu.org/licenses
+ ------------------------------------------------------------------------------------------------------------------------
+ """
+ 
+-from _lib_engine import ffi, lib
++from nfstream._lib_engine import ffi, lib
+ 
+ 
+ def setup_capture(
