@@ -22,6 +22,8 @@ nfstream (6.6.0~ds1) UNRELEASED; urgency=medium
     information regarding the Python implementation/version).
   * Make sure not to ship libpcap's testprogs/visopts.py as that's a
     Python 2 script, which would break the package installation.
+  * Add lintian override for the embedded libpcap, which is known and
+    required in this specific use case.
 
  -- Cyril Brulebois <cyril@debamax.com>  Wed, 15 Apr 2026 14:41:46 +0200
 

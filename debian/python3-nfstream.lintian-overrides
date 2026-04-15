@@ -1,0 +1,1 @@
+python3-nfstream: embedded-library libpcap [usr/lib/python3/dist-packages/nfstream/_lib_engine.abi3.so]
