@@ -1,6 +1,11 @@
 nfstream (6.6.0~ds1) UNRELEASED; urgency=medium
 
   * New upstream release.
+  * Delete vendorized code management from debian/rules: that's been
+    integrated upstream in a slightly different way; their setup.py and
+    the few submodules seem to be enough to build static libraries
+    (libndpi.a and libpcap.a) and then the desired shared library
+    (_lib_engine.abi3.so).
 
  -- Cyril Brulebois <cyril@debamax.com>  Wed, 15 Apr 2026 14:41:46 +0200
 

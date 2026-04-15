@@ -1,52 +1,11 @@
 #!/usr/bin/make -f
 
 export PYBUILD_NAME := nfstream
-export VENDORIZED_LIBRARIES := libgcrypt libgpg-error libpcap ndpi
-export NPROC := $(shell nproc)
 
 %:
 	dh $@ --with quilt,python3 --buildsystem=pybuild
-
-override_dh_clean:
-	rm -rf vendor/staging
-	dh_clean
-
-override_dh_auto_build:
-	# Build each vendorized library serially, letting each sub-make
-	# work with parallelism enabled.
-	$(MAKE) -f debian/rules -j$(NPROC) vendor/staging/usr/lib/libgcrypt.a
-	$(MAKE) -f debian/rules -j$(NPROC) vendor/staging/usr/lib/libgpg-error.a
-	$(MAKE) -f debian/rules -j$(NPROC) vendor/staging/usr/lib/libpcap.a
-	$(MAKE) -f debian/rules -j$(NPROC) vendor/staging/usr/lib/libndpi.a
-	dh_auto_build
 
 # We want engine_cc.so to retain its name, which is used to load it dynamically
 # by the Python code:
 override_dh_python3:
 	dh_python3 --no-ext-rename
-
-vendor/staging/usr/lib/libgcrypt.a:
-	cd vendor/libgcrypt \
-	&& ./autogen.sh \
-	&& ./configure --prefix=/usr --enable-static --disable-shared --with-pic --disable-doc --disable-nls \
-	&& $(MAKE) \
-	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
-
-vendor/staging/usr/lib/libgpg-error.a:
-	cd vendor/libgpg-error \
-	&& ./autogen.sh \
-	&& ./configure --prefix=/usr --enable-static --disable-shared --with-pic --disable-doc \
-	&& $(MAKE) \
-	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
-
-vendor/staging/usr/lib/libpcap.a:
-	cd vendor/libpcap \
-	&& ./configure --prefix=/usr --enable-ipv6 --disable-universal --enable-dbus=no --without-libnl \
-	&& $(MAKE) \
-	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
-
-vendor/staging/usr/lib/libndpi.a:
-	cd vendor/ndpi \
-	&& ./autogen.sh --prefix=/usr --with-only-libndpi \
-	&& $(MAKE) \
-	&& $(MAKE) install DESTDIR=$(CURDIR)/vendor/staging
