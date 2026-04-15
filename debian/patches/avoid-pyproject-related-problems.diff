@@ -1,0 +1,27 @@
+From: Cyril Brulebois <cyril@debamax.com>
+Date: Wed, 15 Apr 2026 15:00:33 +0200
+Subject: Avoid pyproject-related problems
+
+This is a quick and dirty workaround for the following build failure:
+
+    ValueError: invalid pyproject.toml config: `project.license`.
+    configuration error: `project.license` must be valid exactly by one definition (2 matches found):
+
+        - keys:
+            'file': {type: string}
+          required: ['file']
+        - keys:
+            'text': {type: string}
+          required: ['text']
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -8,8 +8,6 @@ version = "6.5.4"
+ description = "A Flexible Network Data Analysis Framework"
+ readme = "README.md"
+ requires-python = ">=3.9"
+-license = "LGPL-3.0-or-later"
+-license-files = ["LICENSE"]
+ authors = [{ name = "Zied Aouini", email = "aouinizied@gmail.com" }]
+ urls = { Homepage = "https://www.nfstream.org/", GitHub = "https://github.com/nfstream/nfstream" }
+ 
