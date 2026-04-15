@@ -1,2 +1,3 @@
 avoid-pyproject-related-problems.diff
 only-compile-with-build-action.diff
+enable-parallel-builds.diff

@@ -12,6 +12,7 @@ nfstream (6.6.0~ds1) UNRELEASED; urgency=medium
   * Add patches:
      - avoid-pyproject-related-problems.diff
      - only-compile-with-build-action.diff
+     - enable-parallel-builds.diff
 
  -- Cyril Brulebois <cyril@debamax.com>  Wed, 15 Apr 2026 14:41:46 +0200
 
