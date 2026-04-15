@@ -1,7 +1,7 @@
 """
 ------------------------------------------------------------------------------------------------------------------------
 mdns.py
-Copyright (C) 2019-21 - NFStream Developers
+Copyright (C) 2019-22 - NFStream Developers
 This file is part of NFStream, a Flexible Network Data Analysis Framework (https://www.nfstream.org/).
 NFStream is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
 License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
@@ -18,13 +18,14 @@ import dpkt
 
 
 class MDNS(NFPlugin):
-    """ MDNS plugin
+    """MDNS plugin
 
     This plugin extracts answer information from MDNS requests. The following information are retrieved:
 
     - mdns_ptr: An ordered list of PTR answsers.
 
     """
+
     def on_init(self, packet, flow):
         flow.udps.mdns_ptr = []
         self.on_update(packet, flow)
@@ -41,6 +42,6 @@ class MDNS(NFPlugin):
             if len(dns.an) > 0:
                 for answer in dns.an:
                     if answer.type == 12:  # PTR
-                        ptr = answer.ptrname.replace(',', ' ')
+                        ptr = answer.ptrname.replace(",", " ")
                         if ptr not in flow.udps.mdns_ptr:
                             flow.udps.mdns_ptr.append(ptr)

@@ -1,7 +1,7 @@
 """
 ------------------------------------------------------------------------------------------------------------------------
 splt.py
-Copyright (C) 2019-21 - NFStream Developers
+Copyright (C) 2019-22 - NFStream Developers
 This file is part of NFStream, a Flexible Network Data Analysis Framework (https://www.nfstream.org/).
 NFStream is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
 License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
@@ -32,6 +32,7 @@ class SPLT(NFPlugin):
     - splt_ipt: Array with inter packet arrival time in milliseconds.
     Note: Tail will be set with default value -1.
     """
+
     @staticmethod
     def _get_packet_size(packet, accounting_mode):
         if accounting_mode == 0:
@@ -54,5 +55,7 @@ class SPLT(NFPlugin):
         if flow.bidirectional_packets <= self.sequence_length:
             packet_index = flow.bidirectional_packets - 1
             flow.udps.splt_direction[packet_index] = packet.direction
-            flow.udps.splt_ps[packet_index] = self._get_packet_size(packet, self.accounting_mode)
+            flow.udps.splt_ps[packet_index] = self._get_packet_size(
+                packet, self.accounting_mode
+            )
             flow.udps.splt_piat_ms[packet_index] = packet.delta_time
