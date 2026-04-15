@@ -6,11 +6,6 @@ export TOPLEVEL_DIR := $(CURDIR)
 %:
 	dh $@ --with quilt,python3 --buildsystem=pybuild
 
-# We want engine_cc.so to retain its name, which is used to load it dynamically
-# by the Python code:
-override_dh_python3:
-	dh_python3 --no-ext-rename
-
 # We need at least one patch applied to ensure clean doesn't build everything:
 override_dh_auto_clean:
 	dh_quilt_patch

@@ -17,6 +17,9 @@ nfstream (6.6.0~ds1) UNRELEASED; urgency=medium
      - adjust-engine-name.diff
   * Clean tmp/ accordingly (see avoid-tmp-dif.diff).
   * Clean other leftovers in the nDPI directory.
+  * Delete the dh_python3 override, as the extension renaming step has
+    become a no-op (the filename is static, and doesn't embed any
+    information regarding the Python implementation/version).
 
  -- Cyril Brulebois <cyril@debamax.com>  Wed, 15 Apr 2026 14:41:46 +0200
 
