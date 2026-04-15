@@ -1,0 +1,93 @@
+From: Cyril Brulebois <cyril@debamax.com>
+Date: Wed, 15 Apr 2026 18:24:23 +0200
+Subject: Don't use /tmp as a build place
+
+Let's stay within the package directory for everything, as it is usual when
+building Debian packages. Using /tmp wouldn't be nice in the first place, and
+even less so with a static filename!
+
+Set a TOPLEVEL_DIR variable based on the top-level Makefile, as there's some
+cd-based jumping around happening (at least in build.sh).
+
+--- a/nfstream/engine/engine_build.py
++++ b/nfstream/engine/engine_build.py
+@@ -49,7 +49,7 @@ def convert_path(p):
+ 
+ 
+ # On Unix, we have our classic paths
+-ROOT = ""
++ROOT = os.getcwd()
+ USR = "usr"
+ USR_LOCAL = "usr/local"
+ if os.name != "posix":  # Windows case, we must take into account msys2 path tree.
+--- a/nfstream/engine/scripts/build.sh
++++ b/nfstream/engine/scripts/build.sh
+@@ -19,7 +19,7 @@ build_libpcap() {
+   cd libpcap
+   ./configure --enable-ipv6 --disable-universal --enable-dbus=no --without-libnl --disable-rdma --without-dpdk
+   make -j$(nproc)
+-  make DESTDIR=/tmp/nfstream_build install
++  make DESTDIR=${TOPLEVEL_DIR}/tmp/nfstream_build install
+   make clean
+   cd ..
+   echo "---------------------------------------------------------------------------------------------------------------"
+@@ -34,18 +34,18 @@ build_libndpi() {
+   cd nDPI
+   gcc --version
+   ./autogen.sh
+-  CFLAGS="-I/tmp/nfstream_build/usr/local/include"
+-  LDFLAGS="-L/tmp/nfstream_build/usr/local/lib -L/tmp/nfstream_build/usr/local/lib64"
++  CFLAGS="-I${TOPLEVEL_DIR}/tmp/nfstream_build/usr/local/include"
++  LDFLAGS="-L${TOPLEVEL_DIR}/tmp/nfstream_build/usr/local/lib -L${TOPLEVEL_DIR}/tmp/nfstream_build/usr/local/lib64"
+   # nDPI 5.0: Build only the library, not example applications (--with-only-libndpi)
+   CFLAGS=${CFLAGS} LDFLAGS=${LDFLAGS} ./configure --with-only-libndpi && CFLAGS=${CFLAGS} LDFLAGS=${LDFLAGS} make -j$(nproc)
+-  make DESTDIR=/tmp/nfstream_build install
++  make DESTDIR=${TOPLEVEL_DIR}/tmp/nfstream_build install
+   make clean
+   cd ..
+   echo "---------------------------------------------------------------------------------------------------------------"
+   echo ""
+ }
+ 
+-rm -rf /tmp/nfstream_build
++rm -rf ${TOPLEVEL_DIR}/tmp/nfstream_build
+ cd nfstream/engine/dependencies
+ build_libpcap
+ build_libndpi
+@@ -54,17 +54,17 @@ ARCH="$(uname -m)"
+ if [ "$ARCH" = "aarch64" ]; then
+   echo "Applying aarch64 lib64→lib compatibility symlinks"
+   # nDPI under /usr
+-  mkdir -p /tmp/nfstream_build/usr/lib
++  mkdir -p ${TOPLEVEL_DIR}/tmp/nfstream_build/usr/lib
+   for name in libndpi.a libndpi.so; do
+-    if [ -f "/tmp/nfstream_build/usr/lib64/$name" ] && [ ! -e "/tmp/nfstream_build/usr/lib/$name" ]; then
+-      ln -s "../lib64/$name" "/tmp/nfstream_build/usr/lib/$name"
++    if [ -f "${TOPLEVEL_DIR}/tmp/nfstream_build/usr/lib64/$name" ] && [ ! -e "${TOPLEVEL_DIR}/tmp/nfstream_build/usr/lib/$name" ]; then
++      ln -s "../lib64/$name" "${TOPLEVEL_DIR}/tmp/nfstream_build/usr/lib/$name"
+     fi
+   done
+   # libpcap under /usr/local
+-  mkdir -p /tmp/nfstream_build/usr/local/lib
++  mkdir -p ${TOPLEVEL_DIR}/tmp/nfstream_build/usr/local/lib
+   for name in libpcap.a libpcap.so; do
+-    if [ -f "/tmp/nfstream_build/usr/local/lib64/$name" ] && [ ! -e "/tmp/nfstream_build/usr/local/lib/$name" ]; then
+-      ln -s "../lib64/$name" "/tmp/nfstream_build/usr/local/lib/$name"
++    if [ -f "${TOPLEVEL_DIR}/tmp/nfstream_build/usr/local/lib64/$name" ] && [ ! -e "${TOPLEVEL_DIR}/tmp/nfstream_build/usr/local/lib/$name" ]; then
++      ln -s "../lib64/$name" "${TOPLEVEL_DIR}/tmp/nfstream_build/usr/local/lib/$name"
+     fi
+   done
+ fi
+@@ -74,9 +74,9 @@ echo "----------------------------------
+ echo "Preprocessing engine_cc headers"
+ echo "---------------------------------------------------------------------------------------------------------------"
+ cd ..
+-gcc -DNDPI_LIB_COMPILATION -DNDPI_CFFI_PREPROCESSING -DNDPI_CFFI_PREPROCESSING_EXCLUDE_PACKED -E -x c -P -C /tmp/nfstream_build/usr/include/ndpi/ndpi_typedefs.h > /tmp/nfstream_build/ndpi_cdefinitions.h
+-gcc -DNDPI_LIB_COMPILATION -DNDPI_CFFI_PREPROCESSING -E -x c -P -C /tmp/nfstream_build/usr/include/ndpi/ndpi_typedefs.h > /tmp/nfstream_build/ndpi_cdefinitions_packed.h
+-gcc -E -x c -P -C lib_engine.c > /tmp/nfstream_build/lib_engine_cdefinitions.c
++gcc -DNDPI_LIB_COMPILATION -DNDPI_CFFI_PREPROCESSING -DNDPI_CFFI_PREPROCESSING_EXCLUDE_PACKED -E -x c -P -C ${TOPLEVEL_DIR}/tmp/nfstream_build/usr/include/ndpi/ndpi_typedefs.h > ${TOPLEVEL_DIR}/tmp/nfstream_build/ndpi_cdefinitions.h
++gcc -DNDPI_LIB_COMPILATION -DNDPI_CFFI_PREPROCESSING -E -x c -P -C ${TOPLEVEL_DIR}/tmp/nfstream_build/usr/include/ndpi/ndpi_typedefs.h > ${TOPLEVEL_DIR}/tmp/nfstream_build/ndpi_cdefinitions_packed.h
++gcc -E -x c -P -C lib_engine.c > ${TOPLEVEL_DIR}/tmp/nfstream_build/lib_engine_cdefinitions.c
+ echo "---------------------------------------------------------------------------------------------------------------"
+ echo ""
+ cd ../..
