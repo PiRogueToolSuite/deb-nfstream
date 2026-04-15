@@ -26,6 +26,7 @@ nfstream (6.6.0~ds1) UNRELEASED; urgency=medium
     required in this specific use case.
   * Delete debian/README.source, no longer relevant with upstream's
     submodule introduction.
+  * Add python3-all-dev to Build-Depends (required for pyconfig.h).
 
  -- Cyril Brulebois <cyril@debamax.com>  Wed, 15 Apr 2026 14:41:46 +0200
 
