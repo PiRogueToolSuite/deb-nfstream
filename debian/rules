@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 export PYBUILD_NAME := nfstream
+export TOPLEVEL_DIR := $(CURDIR)
 
 %:
 	dh $@ --with quilt,python3 --buildsystem=pybuild
@@ -9,3 +10,11 @@ export PYBUILD_NAME := nfstream
 # by the Python code:
 override_dh_python3:
 	dh_python3 --no-ext-rename
+
+# We need at least one patch applied to ensure clean doesn't build everything:
+override_dh_auto_clean:
+	dh_quilt_patch
+	dh_auto_clean
+	dh_quilt_unpatch
+	# Temporary install steps happen with $(TOPLEVEL_DIR)/tmp/nfstream_build:
+	rm -rf tmp
