@@ -6,6 +6,10 @@ export TOPLEVEL_DIR := $(CURDIR)
 %:
 	dh $@ --with quilt,python3 --buildsystem=pybuild
 
+override_dh_auto_install:
+	dh_auto_install
+	find debian/python3-nfstream/ -name visopts.py -print -delete
+
 # We need at least one patch applied to ensure clean doesn't build everything:
 override_dh_auto_clean:
 	dh_quilt_patch

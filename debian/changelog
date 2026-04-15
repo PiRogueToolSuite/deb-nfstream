@@ -20,6 +20,8 @@ nfstream (6.6.0~ds1) UNRELEASED; urgency=medium
   * Delete the dh_python3 override, as the extension renaming step has
     become a no-op (the filename is static, and doesn't embed any
     information regarding the Python implementation/version).
+  * Make sure not to ship libpcap's testprogs/visopts.py as that's a
+    Python 2 script, which would break the package installation.
 
  -- Cyril Brulebois <cyril@debamax.com>  Wed, 15 Apr 2026 14:41:46 +0200
 
