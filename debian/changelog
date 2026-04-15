@@ -1,3 +1,9 @@
+nfstream (6.6.0~ds1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Cyril Brulebois <cyril@debamax.com>  Wed, 15 Apr 2026 14:41:46 +0200
+
 nfstream (6.3.5~ds3) bookworm; urgency=medium
 
   * Add git build-dep.
