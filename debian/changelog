@@ -9,8 +9,9 @@ nfstream (6.6.0~ds1) UNRELEASED; urgency=medium
   * Delete vendor/* subdirectories.
   * Delete patch (no longer needed):
      - libgcrypt-update-gpg-error-detection.patch
-  * Add patch:
+  * Add patches:
      - avoid-pyproject-related-problems.diff
+     - only-compile-with-build-action.diff
 
  -- Cyril Brulebois <cyril@debamax.com>  Wed, 15 Apr 2026 14:41:46 +0200
 

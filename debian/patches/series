@@ -1,1 +1,2 @@
 avoid-pyproject-related-problems.diff
+only-compile-with-build-action.diff

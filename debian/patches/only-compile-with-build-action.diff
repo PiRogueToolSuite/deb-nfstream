@@ -1,0 +1,43 @@
+From: Cyril Brulebois <cyril@debamax.com>
+Date: Wed, 15 Apr 2026 18:23:45 +0200
+Subject: Only compile with build action
+
+Without this, engine_build.py would start the shell scripts responsible for
+building everything every time setup.py is called, meaning at least with clean,
+build, and install. This would trigger pyproject-related problems with clean,
+since that's called with unapplied patches. This would mean wasting time with
+install, as the previous call with build would have built everything already.
+
+Let's introduce a filter on the first argument accordingly. The filter is used
+in two different places, with an immediate stop for some actions at the very
+beginning and a conditional call to nfstream/engine/scripts/build.sh, which is
+to be called for the build action, but not for the install one. In the latter
+case, the instructions below are important!
+
+--- a/nfstream/engine/engine_build.py
++++ b/nfstream/engine/engine_build.py
+@@ -17,6 +17,12 @@ from cffi import FFI
+ import subprocess
+ import pathlib
+ import os
++import sys
++
++
++if sys.argv[1] in ['clean', 'config']:
++    print(f'Not doing anything with action={sys.argv[1]}', file=sys.stderr)
++    sys.exit(0)
+ 
+ 
+ def cdef_to_replace(cdef):
+@@ -75,7 +81,10 @@ if os.name != "posix":  # Windows case
+         shell=True,
+     )
+ else:  # Linux, MacOS
+-    subprocess.check_call([str(BUILD_SCRIPT_PATH) + ".sh"], shell=True)
++    if sys.argv[1] == 'build':
++        subprocess.check_call([str(BUILD_SCRIPT_PATH) + ".sh"], shell=True)
++    else:
++        print(f'Not actually building with action={sys.argv[1]}', file=sys.stderr)
+ 
+ 
+ INCLUDE_DIRS = [
