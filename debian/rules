@@ -18,3 +18,6 @@ override_dh_auto_clean:
 	dh_quilt_unpatch
 	# Temporary install steps happen with $(TOPLEVEL_DIR)/tmp/nfstream_build:
 	rm -rf tmp
+	# Leftovers:
+	rm -f nfstream/engine/dependencies/nDPI/tests/do-dga.sh
+	rm -f nfstream/engine/dependencies/nDPI/tests/do-unit.sh

@@ -16,6 +16,7 @@ nfstream (6.6.0~ds1) UNRELEASED; urgency=medium
      - avoid-tmp-dir.diff
      - adjust-engine-name.diff
   * Clean tmp/ accordingly (see avoid-tmp-dif.diff).
+  * Clean other leftovers in the nDPI directory.
 
  -- Cyril Brulebois <cyril@debamax.com>  Wed, 15 Apr 2026 14:41:46 +0200
 
